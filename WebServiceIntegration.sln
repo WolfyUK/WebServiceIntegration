@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServiceIntegration.Client", "WebServiceIntegration.Client\WebServiceIntegration.Client.csproj", "{BE4F8ECD-7679-4FAF-850B-65AC752BD7CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServiceIntegration.Shipping", "WebServiceIntegration.Shipping\WebServiceIntegration.Shipping.csproj", "{0225771F-16C6-44F1-BB22-CBEC57C3B131}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServiceIntegration.DHL", "WebServiceIntegration.DHL\WebServiceIntegration.DHL.csproj", "{CE5D469D-3BF9-445B-B261-A468E39D5FCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServiceIntegration.Messages", "WebServiceIntegration.Messages\WebServiceIntegration.Messages.csproj", "{897305C9-976A-4AE9-AA51-1F2623033ED1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServiceIntegration.Fedex", "WebServiceIntegration.Fedex\WebServiceIntegration.Fedex.csproj", "{904D6477-D549-4F1F-AF10-AEEE23A608FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServiceIntegration.ITOps", "WebServiceIntegration.ITOps\WebServiceIntegration.ITOps.csproj", "{88448860-4750-44AD-AB2D-087B4E5033FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE4F8ECD-7679-4FAF-850B-65AC752BD7CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE4F8ECD-7679-4FAF-850B-65AC752BD7CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE4F8ECD-7679-4FAF-850B-65AC752BD7CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE4F8ECD-7679-4FAF-850B-65AC752BD7CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0225771F-16C6-44F1-BB22-CBEC57C3B131}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0225771F-16C6-44F1-BB22-CBEC57C3B131}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0225771F-16C6-44F1-BB22-CBEC57C3B131}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0225771F-16C6-44F1-BB22-CBEC57C3B131}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE5D469D-3BF9-445B-B261-A468E39D5FCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE5D469D-3BF9-445B-B261-A468E39D5FCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE5D469D-3BF9-445B-B261-A468E39D5FCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE5D469D-3BF9-445B-B261-A468E39D5FCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{897305C9-976A-4AE9-AA51-1F2623033ED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{897305C9-976A-4AE9-AA51-1F2623033ED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{897305C9-976A-4AE9-AA51-1F2623033ED1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{897305C9-976A-4AE9-AA51-1F2623033ED1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{904D6477-D549-4F1F-AF10-AEEE23A608FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{904D6477-D549-4F1F-AF10-AEEE23A608FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{904D6477-D549-4F1F-AF10-AEEE23A608FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{904D6477-D549-4F1F-AF10-AEEE23A608FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88448860-4750-44AD-AB2D-087B4E5033FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88448860-4750-44AD-AB2D-087B4E5033FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88448860-4750-44AD-AB2D-087B4E5033FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88448860-4750-44AD-AB2D-087B4E5033FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {76D7369A-B46A-4E23-A169-DFC18B65579D}
+	EndGlobalSection
+EndGlobal
