@@ -11,7 +11,8 @@
         IHandleMessages<DispatchOrderToDhlFailure>,
         IHandleMessages<DispatchOrderToDhlSucsess>,
         IHandleMessages<DispatchOrderToFedexSucsess>,
-        IHandleMessages<DispatchOrderToFedexFailure>
+        IHandleMessages<DispatchOrderToFedexFailure>,
+        IHandleMessages<FedexAndDhlFailed>
     { 
         protected override void ConfigureHowToFindSaga(SagaPropertyMapper<CreateOrderShippingSagaData> mapper)
         {
@@ -30,6 +31,7 @@
             Data.CountryCode = message.OrderCountryCode;
             Data.CustomerNumber = customerNumber;
             Data.ThrowException = message.ThrowException;
+            Data.OrderNumber = message.OrderNumber;
 
             // do some shipping related logic
             var dispatchOrderToDhl = new DispatchOrderToDhl
@@ -57,6 +59,8 @@
             // do some shipping related logic
             Console.WriteLine("Dispatch Order: {0} to Fedex ", message.OrderId);
 
+            Data.DhlFailed = true;
+
             var customerNumber = new Guid("f64bb7b3-fb1c-486e-b745-8062bf30e4d3");
 
             var dispatchOrderToFedex = new DispatchOrderToFedex
@@ -77,6 +81,8 @@
             // complete of mark complete in state to keep the data or rehydrate the saga
             Console.WriteLine("Dispatch Order: {0} and DispatchId: {1} success with DHL", message.OrderId, message.DispatchId);
 
+            Data.DhlFailed = false;
+
             return Task.FromResult(0);
         }
 
@@ -84,6 +90,8 @@
         {
             // complete of mark complete in state to keep the data or rehydrate the saga
             Console.WriteLine("Dispatch Order: {0} and DispatchId: {1} success with Fedex", message.OrderId, message.DispatchId);
+
+            Data.FedexFailed = false;
 
             return Task.FromResult(0);
         }
@@ -95,9 +103,39 @@
             // timeout to retry later
             // and so on
 
+            Data.FedexFailed = true;
+
+            if (Data.FedexFailed && Data.DhlFailed)
+            {
+                // timeout for 10 min. and try again
+                // reset flags?
+                RequestTimeout<FedexAndDhlFailed>(context, new TimeSpan(00, 10, 00));
+            }
             Console.WriteLine("Dispatch Order: {0} and DispatchId: {1} failed with Fedex", message.OrderId, message.DispatchId);
 
             return Task.FromResult(0);
+        }
+
+        public async Task Handle(FedexAndDhlFailed message, IMessageHandlerContext context)
+        {
+            // do stuff?
+            var customerNumber = new Guid("f64bb7b3-fb1c-486e-b745-8062bf30e4d3");
+
+            Console.WriteLine("Handling message FedexAndDhlFailed orderId: {0} OrderNumber: {1}", Data.OrderId,
+                Data.OrderNumber);
+
+            // do some shipping related logic
+            var dispatchOrderToDhl = new DispatchOrderToDhl
+            {
+                CountryCode = Data.CountryCode,
+                OrderId = Data.OrderId,
+                DhlCustomerNumber = customerNumber,
+                DispatchId = Guid.NewGuid(),
+                ThrowException = Data.ThrowException
+            };
+
+            //Dispatch the order to DHL
+            await context.Send(dispatchOrderToDhl).ConfigureAwait(false);
         }
     }
 }

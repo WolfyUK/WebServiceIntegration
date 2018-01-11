@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\DispatchOrderToFedex.cs" />
+    <Compile Include="Response\FedexAndDhlFailed.cs" />
     <Compile Include="Response\DispatchOrderToFedexFailure.cs" />
     <Compile Include="Response\DispatchOrderToDhlFailure.cs" />
     <Compile Include="Response\DispatchOrderToFedexSucsess.cs" />
