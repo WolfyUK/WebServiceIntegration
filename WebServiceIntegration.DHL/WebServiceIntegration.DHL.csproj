@@ -52,6 +52,7 @@
     <Reference Include="System.ServiceProcess" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Host.cs" />
     <Compile Include="MainNancyModule.cs" />
     <Compile Include="Program.cs" />
