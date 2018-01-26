@@ -12,7 +12,8 @@
         IHandleMessages<DispatchOrderToDhlSucsess>,
         IHandleMessages<DispatchOrderToFedexSucsess>,
         IHandleMessages<DispatchOrderToFedexFailure>,
-        IHandleMessages<FedexAndDhlFailed>
+        IHandleMessages<FedexAndDhlFailed>,
+        IHandleTimeouts<FedexAndDhlFailed>
     { 
         protected override void ConfigureHowToFindSaga(SagaPropertyMapper<CreateOrderShippingSagaData> mapper)
         {
@@ -69,7 +70,7 @@
                 OrderId = message.OrderId,
                 FedexCustomerNumber = customerNumber,
                 DispatchId = Guid.NewGuid(),
-                ThrowException = !Data.ThrowException, //reverse the failure for Fedex
+                ThrowException = Data.ThrowException
             };
 
             //Dispatch the order to Fedex
@@ -107,9 +108,9 @@
 
             if (Data.FedexFailed && Data.DhlFailed)
             {
-                // timeout for 10 min. and try again
+                // timeout for 1 min. and try again
                 // reset flags?
-                RequestTimeout<FedexAndDhlFailed>(context, new TimeSpan(00, 10, 00));
+                RequestTimeout<FedexAndDhlFailed>(context, new TimeSpan(00, 1, 00));
             }
             Console.WriteLine("Dispatch Order: {0} and DispatchId: {1} failed with Fedex", message.OrderId, message.DispatchId);
 
@@ -136,6 +137,36 @@
 
             //Dispatch the order to DHL
             await context.Send(dispatchOrderToDhl).ConfigureAwait(false);
+        }
+
+        public Task Timeout(FedexAndDhlFailed state, IMessageHandlerContext context)
+        {
+            Console.WriteLine("Timeout for message FedexAndDhlFailed orderId: {0} OrderNumber: {1}", Data.OrderId,
+                Data.OrderNumber);
+
+            if (Data.FedexFailed && Data.DhlFailed)
+            {
+                // try again
+                Data.FedexFailed = false;
+                var customerNumber = new Guid("f64bb7b3-fb1c-486e-b745-8062bf30e4d3");
+
+                // do some shipping related logic
+                var dispatchOrderToDhl = new DispatchOrderToDhl
+                {
+                    CountryCode = Data.CountryCode,
+                    OrderId = Data.OrderId,
+                    DhlCustomerNumber = customerNumber,
+                    DispatchId = Guid.NewGuid(),
+                    ThrowException = Data.ThrowException
+                };
+
+                //Dispatch the order to DHL
+                Console.WriteLine($"OrderId {Data.OrderId} resent to DHL after timeout");
+                return context.Send(dispatchOrderToDhl);
+            }
+
+            Console.WriteLine($"OrderId {Data.OrderId} done after timeout");
+            return Task.CompletedTask;
         }
     }
 }
